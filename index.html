@@ -133,24 +133,27 @@
       display: flex; justify-content: center;
       border-top: 1px solid var(--border-soft);
       overflow-x: auto; scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
     }
     .tab-bar::-webkit-scrollbar { display: none; }
     .tab-btn {
-      flex-shrink: 0; padding: 0.9rem 1.6rem;
+      flex-shrink: 0; padding: 0.9rem 1.4rem;
       background: none; border: none;
-      border-bottom: 1px solid transparent;
-      font-family: 'Raleway', sans-serif;
-      font-size: 0.72rem; font-weight: 500;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: rgba(255,255,255,0.45); cursor: pointer;
-      transition: color 0.4s ease, border-color 0.4s ease;
-      white-space: nowrap; min-height: 44px;
+      border-bottom: 2px solid transparent;
+      font-family: 'League Spartan', sans-serif;
+      font-size: 0.7rem; font-weight: 500;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); cursor: pointer;
+      transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+      white-space: nowrap; min-height: 48px;
       text-decoration: none; display: inline-flex; align-items: center;
     }
     .tab-btn:hover { color: var(--gold-light); }
     .tab-btn.active {
       color: var(--gold);
       border-bottom-color: var(--gold);
+      background: rgba(201,168,76,0.05);
     }
 
     section[id] { scroll-margin-top: var(--nav-h); }
@@ -1236,40 +1239,43 @@
     const tabBtns = document.querySelectorAll('.tab-btn');
     const sections = Array.from(document.querySelectorAll('section[id]'));
     let currentActive = '';
-    let ticking = false;
 
-    function getActiveSection() {
-      const triggerPoint = window.innerHeight * 0.35;
-      let active = sections[0].id;
-      for (const s of sections) {
-        const top = s.getBoundingClientRect().top;
-        if (top <= triggerPoint) {
-          active = s.id;
+    function setActive(id) {
+      if (id === currentActive) return;
+      currentActive = id;
+      tabBtns.forEach(b => {
+        const isActive = b.getAttribute('href') === '#' + id;
+        b.classList.toggle('active', isActive);
+        // Scroll active tab into center of tab bar (crucial for mobile)
+        if (isActive) {
+          b.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         }
-      }
-      return active;
+      });
     }
 
-    function updateNav() {
-      const id = getActiveSection();
-      if (id !== currentActive) {
-        currentActive = id;
-        tabBtns.forEach(b => {
-          b.classList.toggle('active', b.getAttribute('href') === '#' + id);
-        });
-      }
-      ticking = false;
-    }
+    const navObserver = new IntersectionObserver(entries => {
+      // Find the entry that is most visible / just entered
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActive(entry.target.id);
+        }
+      });
+    }, {
+      rootMargin: '-35% 0px -60% 0px',
+      threshold: 0
+    });
 
-    function onScroll() {
-      if (!ticking) {
-        requestAnimationFrame(updateNav);
-        ticking = true;
-      }
-    }
+    sections.forEach(s => navObserver.observe(s));
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    updateNav();
+    // Also handle edge case: near bottom of page, activate last section
+    window.addEventListener('scroll', () => {
+      const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 80;
+      if (nearBottom && sections.length) {
+        setActive(sections[sections.length - 1].id);
+      }
+    }, { passive: true });
+
+    setActive(sections[0]?.id || 'home');
   })();
 
   /* ─── SCROLL REVEAL ─── */
