@@ -143,7 +143,7 @@
       font-size: 0.72rem; font-weight: 500;
       letter-spacing: 0.22em; text-transform: uppercase;
       color: rgba(255,255,255,0.45); cursor: pointer;
-      transition: color 0.25s, border-color 0.25s;
+      transition: color 0.4s ease, border-color 0.4s ease;
       white-space: nowrap; min-height: 44px;
       text-decoration: none; display: inline-flex; align-items: center;
     }
@@ -1234,29 +1234,42 @@
   /* ─── ACTIVE NAV ─── */
   (function() {
     const tabBtns = document.querySelectorAll('.tab-btn');
-    const sections = document.querySelectorAll('section[id]');
+    const sections = Array.from(document.querySelectorAll('section[id]'));
+    let currentActive = '';
+    let ticking = false;
 
-    function setActive(id) {
-      tabBtns.forEach(b => {
-        b.classList.toggle('active', b.getAttribute('href') === '#' + id);
-      });
+    function getActiveSection() {
+      const triggerPoint = window.innerHeight * 0.35;
+      let active = sections[0].id;
+      for (const s of sections) {
+        const top = s.getBoundingClientRect().top;
+        if (top <= triggerPoint) {
+          active = s.id;
+        }
+      }
+      return active;
     }
 
-    // Set first section active by default
-    if (sections.length) setActive(sections[0].id);
+    function updateNav() {
+      const id = getActiveSection();
+      if (id !== currentActive) {
+        currentActive = id;
+        tabBtns.forEach(b => {
+          b.classList.toggle('active', b.getAttribute('href') === '#' + id);
+        });
+      }
+      ticking = false;
+    }
 
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActive(entry.target.id);
-        }
-      });
-    }, {
-      rootMargin: '-40% 0px -55% 0px',
-      threshold: 0
-    });
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(updateNav);
+        ticking = true;
+      }
+    }
 
-    sections.forEach(s => observer.observe(s));
+    window.addEventListener('scroll', onScroll, { passive: true });
+    updateNav();
   })();
 
   /* ─── SCROLL REVEAL ─── */
