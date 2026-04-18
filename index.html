@@ -1236,9 +1236,11 @@
 
   /* ─── ACTIVE NAV ─── */
   (function() {
-    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabBtns  = document.querySelectorAll('.tab-btn');
     const sections = Array.from(document.querySelectorAll('section[id]'));
+    const tabBar   = document.querySelector('.tab-bar');
     let currentActive = '';
+    let ticking = false;
 
     function setActive(id) {
       if (id === currentActive) return;
@@ -1246,36 +1248,53 @@
       tabBtns.forEach(b => {
         const isActive = b.getAttribute('href') === '#' + id;
         b.classList.toggle('active', isActive);
-        // Scroll active tab into center of tab bar (crucial for mobile)
-        if (isActive) {
-          b.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        if (isActive && tabBar) {
+          // Center the active tab inside the scrollable tab bar
+          const tabLeft   = b.offsetLeft;
+          const tabWidth  = b.offsetWidth;
+          const barWidth  = tabBar.offsetWidth;
+          const scrollTo  = tabLeft - (barWidth / 2) + (tabWidth / 2);
+          tabBar.scrollTo({ left: scrollTo, behavior: 'smooth' });
         }
       });
     }
 
-    const navObserver = new IntersectionObserver(entries => {
-      // Find the entry that is most visible / just entered
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActive(entry.target.id);
-        }
-      });
-    }, {
-      rootMargin: '-35% 0px -60% 0px',
-      threshold: 0
-    });
+    function getActiveSection() {
+      // nav height as trigger offset – activate section once its top crosses 40% of viewport
+      const navH      = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 110;
+      const trigger   = navH + window.innerHeight * 0.15;
+      const scrollBot = window.scrollY + window.innerHeight;
+      const pageH     = document.documentElement.scrollHeight;
 
-    sections.forEach(s => navObserver.observe(s));
-
-    // Also handle edge case: near bottom of page, activate last section
-    window.addEventListener('scroll', () => {
-      const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 80;
-      if (nearBottom && sections.length) {
-        setActive(sections[sections.length - 1].id);
+      // If near bottom, always activate last section
+      if (scrollBot >= pageH - 60) {
+        return sections[sections.length - 1].id;
       }
-    }, { passive: true });
 
-    setActive(sections[0]?.id || 'home');
+      // Walk sections bottom-up: pick the last one whose top is above the trigger line
+      let active = sections[0].id;
+      for (const sec of sections) {
+        if (sec.getBoundingClientRect().top <= trigger) {
+          active = sec.id;
+        }
+      }
+      return active;
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(() => {
+          setActive(getActiveSection());
+          ticking = false;
+        });
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Initial state
+    setActive(getActiveSection());
   })();
 
   /* ─── SCROLL REVEAL ─── */
