@@ -545,16 +545,6 @@
       letter-spacing: 0.08em;
     }
 
-    /* ─── Q&A TOGGLE ─── */
-  function toggleQA(btn) {
-    var item = btn.closest('.gno-qa-item');
-    var isOpen = item.classList.contains('open');
-    // Close all
-    document.querySelectorAll('.gno-qa-item.open').forEach(function(el) { el.classList.remove('open'); });
-    // Open clicked if it was closed
-    if (!isOpen) item.classList.add('open');
-  }
-
   /* ─── MODAL ─── */
     .modal-overlay {
       display: none; position: fixed; inset: 0; z-index: 200;
