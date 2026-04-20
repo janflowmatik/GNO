@@ -545,7 +545,17 @@
       letter-spacing: 0.08em;
     }
 
-    /* ─── MODAL ─── */
+    /* ─── Q&A TOGGLE ─── */
+  function toggleQA(btn) {
+    var item = btn.closest('.gno-qa-item');
+    var isOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.gno-qa-item.open').forEach(function(el) { el.classList.remove('open'); });
+    // Open clicked if it was closed
+    if (!isOpen) item.classList.add('open');
+  }
+
+  /* ─── MODAL ─── */
     .modal-overlay {
       display: none; position: fixed; inset: 0; z-index: 200;
       background: rgba(0,0,0,0.75); backdrop-filter: blur(6px);
@@ -643,32 +653,56 @@
     .gno-ig-link svg { width: 18px; height: 18px; flex-shrink: 0; }
 
     /* VIDEO */
-    .gno-video-wrap {
-      position: relative;
-      width: 100%; max-width: 420px;
-      margin: 0 auto;
-      aspect-ratio: 9/16;
-      background: var(--black-card);
-      border: 1px solid var(--border-soft);
-      overflow: hidden;
+    /* ─── GNO Q&A ─── */
+    .gno-qa-header {
+      display: flex; align-items: center; gap: 0.9rem;
+      margin-bottom: 2rem;
     }
-    .gno-video {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
+    .gno-qa-hut {
+      height: 36px; width: auto;
+      opacity: 0.75;
+      filter: brightness(0) saturate(100%) invert(70%) sepia(40%) saturate(600%) hue-rotate(5deg) brightness(95%);
     }
-    .gno-video-placeholder {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 1rem; pointer-events: none;
-      color: rgba(255,255,255,0.2);
-      font-size: 0.78rem; letter-spacing: 0.1em; text-align: center;
-      line-height: 1.6;
+    .gno-qa {
+      margin-top: 4rem;
+      border-top: 1px solid var(--border-soft);
+      padding-top: 3rem;
     }
-    .gno-video-placeholder svg { width: 56px; height: 56px; }
-    .gno-video-placeholder span { color: var(--gold-dim); font-size: 0.7rem; letter-spacing: 0.15em; }
-    .gno-video:not([src=""]) ~ .gno-video-placeholder,
-    .gno-video.has-src ~ .gno-video-placeholder { display: none; }
+    .gno-qa-title {
+      font-family: 'League Spartan', sans-serif;
+      font-size: 0.85rem; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 0;
+    }
+    .gno-qa-item {
+      border-bottom: 1px solid var(--border-soft);
+      padding: 1.2rem 0;
+    }
+    .gno-qa-question {
+      font-family: 'League Spartan', sans-serif;
+      font-size: 1rem; font-weight: 600;
+      color: var(--white); cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 1rem; background: none; border: none;
+      width: 100%; text-align: left; padding: 0;
+      letter-spacing: 0.02em;
+    }
+    .gno-qa-question:hover { color: var(--gold-light); }
+    .gno-qa-icon {
+      flex-shrink: 0; width: 18px; height: 18px;
+      color: var(--gold); transition: transform 0.3s ease;
+    }
+    .gno-qa-item.open .gno-qa-icon { transform: rotate(45deg); }
+    .gno-qa-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.95rem; line-height: 1.85;
+    }
+    .gno-qa-item.open .gno-qa-answer {
+      max-height: 300px;
+      padding-top: 0.9rem;
+    }
 
     /* GNO RESPONSIVE */
     @media (max-width: 900px) {
@@ -837,18 +871,45 @@
 
     </div>
 
-    <!-- VIDEO -->
-    <div class="gno-video-wrap reveal reveal-delay-4">
-      <video class="gno-video" controls preload="none" poster="gno_poster.jpg">
-        <source src="gno_video.mp4" type="video/mp4" />
-      </video>
-      <div class="gno-video-placeholder">
-        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="24" cy="24" r="20" stroke="#c9a84c" stroke-width="1.2"/>
-          <path d="M20 17l14 7-14 7V17z" fill="#c9a84c"/>
-        </svg>
-        <p>Dein Video hier<br><span>gno_video.mp4</span></p>
+    <!-- Q&A -->
+    <div class="gno-qa reveal reveal-delay-4">
+      <div class="gno-qa-header">
+        <img src="Hut.png" alt="SUITS Hut" class="gno-qa-hut" />
+        <p class="gno-qa-title">Häufige Fragen</p>
       </div>
+
+      <div class="gno-qa-item">
+        <button class="gno-qa-question" onclick="toggleQA(this)">
+          Wie kann ich einen Termin für die Gentlemen's Night Out buchen?
+          <svg class="gno-qa-icon" viewBox="0 0 18 18" fill="none"><line x1="9" y1="2" x2="9" y2="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="2" y1="9" x2="16" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="gno-qa-answer">Ganz einfach – schreib uns eine Nachricht über unser Kontaktformular. Wir finden gemeinsam einen passenden Termin für dich.</div>
+      </div>
+
+      <div class="gno-qa-item">
+        <button class="gno-qa-question" onclick="toggleQA(this)">
+          Was kostet die Gentlemen's Night Out?
+          <svg class="gno-qa-icon" viewBox="0 0 18 18" fill="none"><line x1="9" y1="2" x2="9" y2="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="2" y1="9" x2="16" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="gno-qa-answer">Gar nichts. Der Abend ist komplett kostenlos – Bier und Snacks inklusive. 😉</div>
+      </div>
+
+      <div class="gno-qa-item">
+        <button class="gno-qa-question" onclick="toggleQA(this)">
+          Wo findet die Gentlemen's Night Out statt?
+          <svg class="gno-qa-icon" viewBox="0 0 18 18" fill="none"><line x1="9" y1="2" x2="9" y2="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="2" y1="9" x2="16" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="gno-qa-answer">Bei uns im Store – ob Kiel oder Lübeck liegt ganz bei dir. Wo genau, klären wir bei der Terminabsprache.</div>
+      </div>
+
+      <div class="gno-qa-item">
+        <button class="gno-qa-question" onclick="toggleQA(this)">
+          Was muss ich vorbereiten oder mitbringen?
+          <svg class="gno-qa-icon" viewBox="0 0 18 18" fill="none"><line x1="9" y1="2" x2="9" y2="16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="2" y1="9" x2="16" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <div class="gno-qa-answer">Keine Vorkenntnisse, keine Vorbereitungen. Wir ermitteln nach deiner Anfrage gemeinsam deine Vorstellungen und kümmern uns um den Rest – von Kopf bis Fuß.</div>
+      </div>
+
     </div>
 
   </div>
@@ -1218,6 +1279,16 @@
 </div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  /* ─── Q&A TOGGLE ─── */
+  function toggleQA(btn) {
+    var item = btn.closest('.gno-qa-item');
+    var isOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.gno-qa-item.open').forEach(function(el) { el.classList.remove('open'); });
+    // Open clicked if it was closed
+    if (!isOpen) item.classList.add('open');
+  }
+
   /* ─── MODAL ─── */
   function openModal(id) {
     const el = document.getElementById(id);
