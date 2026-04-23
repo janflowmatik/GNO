@@ -1246,13 +1246,24 @@
     }
     .brand-logo:hover { opacity: 1; }
 
-    /* Dunkles Logo auf hellem Hintergrund → weiß machen */
+    /* Dunkles Logo auf hellem Hintergrund:
+       invert(1) → weißer Hintergrund wird schwarz, dunkles Logo wird hell
+       screen     → schwarzer Hintergrund verschwindet → helles Logo bleibt */
     .brand-logo.light {
-      filter: brightness(0) invert(1);
+      filter: invert(1);
+      mix-blend-mode: screen;
     }
 
-    /* Helles Logo auf dunklem Hintergrund → Schwarz per screen entfernen */
+    /* Helles Logo auf schwarzem Hintergrund:
+       screen entfernt den schwarzen Hintergrund direkt */
     .brand-logo.dark {
+      mix-blend-mode: screen;
+    }
+
+    /* Dunkles Logo auf schwarzem Hintergrund (z.B. Stetson):
+       Helligkeit hochziehen damit das Logo sichtbar wird, dann screen */
+    .brand-logo.dark-boost {
+      filter: brightness(4) saturate(0);
       mix-blend-mode: screen;
     }
 
@@ -2057,7 +2068,7 @@
         <img src="digel.jpg"       alt="Digel"        class="brand-logo light">
         <img src="strellson.jpg"   alt="Strellson"    class="brand-logo dark">
         <img src="olymp.JPG"       alt="OLYMP"        class="brand-logo light">
-        <img src="stetson.png"     alt="Stetson"      class="brand-logo dark">
+        <img src="stetson.png" alt="Stetson" class="brand-logo dark-boost">
         <img src="matinique.png"   alt="Matinique"    class="brand-logo dark">
         <img src="lindenmann.png"  alt="Lindenmann"   class="brand-logo dark">
 
@@ -2066,7 +2077,7 @@
         <img src="digel.jpg"       alt="Digel"        class="brand-logo light">
         <img src="strellson.jpg"   alt="Strellson"    class="brand-logo dark">
         <img src="olymp.JPG"       alt="OLYMP"        class="brand-logo light">
-        <img src="stetson.png"     alt="Stetson"      class="brand-logo dark">
+        <img src="stetson.png" alt="Stetson" class="brand-logo dark-boost">
         <img src="matinique.png"   alt="Matinique"    class="brand-logo dark">
         <img src="lindenmann.png"  alt="Lindenmann"   class="brand-logo dark">
 
