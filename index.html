@@ -1236,29 +1236,24 @@
     .brands-track.dragging { cursor: grabbing; }
 
     .brand-logo {
-      height: 44px;
+      height: 36px;
+      max-width: 150px;
       width: auto;
       object-fit: contain;
       flex-shrink: 0;
-      opacity: 0.8;
+      opacity: 0.85;
       transition: opacity 0.2s;
     }
     .brand-logo:hover { opacity: 1; }
 
-    /* Dunkles Logo auf hellem Hintergrund → invertieren + screen entfernt Hintergrund */
+    /* Dunkles Logo auf hellem Hintergrund → weiß machen */
     .brand-logo.light {
-      filter: invert(1);
-      mix-blend-mode: screen;
+      filter: brightness(0) invert(1);
     }
 
-    /* Helles Logo auf dunklem Hintergrund → screen entfernt schwarzen Hintergrund */
+    /* Helles Logo auf dunklem Hintergrund → Schwarz per screen entfernen */
     .brand-logo.dark {
       mix-blend-mode: screen;
-    }
-
-    /* Dunkles Logo auf schwarzem Hintergrund → weiß machen */
-    .brand-logo.make-white {
-      filter: brightness(0) invert(1);
     }
 
     /* ─── STANDORTE ─────────────────────────────────────────── */
