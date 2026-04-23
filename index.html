@@ -60,7 +60,7 @@
     .section-label {
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 13.5px;
+      font-size: 15.5px;
       letter-spacing: 0.35em;
       text-transform: uppercase;
       color: var(--gold);
@@ -109,7 +109,7 @@
       gap: 12px;
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 12px;
+      font-size: 16px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       padding: 16px 38px;
@@ -197,7 +197,7 @@
     .nav-links a {
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 12px;
+      font-size: 16px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--white);
@@ -228,29 +228,40 @@
     /* ── Mobile Navbar (kein Hamburger) ── */
     .nav-mobile {
       display: none;
-      justify-content: center;
-      gap: 0;
       list-style: none;
-      padding: 12px 16px;
+      padding: 0 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      white-space: nowrap;
+      height: 48px;
+      align-items: center;
     }
-    .nav-mobile li { flex: 1; text-align: center; }
+    .nav-mobile::-webkit-scrollbar { display: none; }
+    .nav-mobile li {
+      display: inline-flex;
+      align-items: center;
+      height: 100%;
+    }
     .nav-mobile a {
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 10px;
+      font-size: 14px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--white);
       opacity: 0.65;
       transition: opacity 0.2s, color 0.2s;
-      display: block;
-      padding: 4px 2px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 14px;
+      height: 100%;
       position: relative;
+      white-space: nowrap;
     }
     .nav-mobile a::after {
       content: '';
       position: absolute;
-      bottom: -2px; left: 25%; right: 25%;
+      bottom: 0; left: 14px; right: 14px;
       height: 1px;
       background: var(--gold);
       transform: scaleX(0);
@@ -262,7 +273,14 @@
     }
     .nav-mobile a.active::after { transform: scaleX(1); }
 
-    /* Hamburger – nicht mehr verwendet, versteckt */
+    /* Mobile: immer Hintergrund sobald gescrollt */
+    @media (max-width: 960px) {
+      #navbar.is-scrolled {
+        background: rgba(12, 11, 9, 0.96);
+        backdrop-filter: blur(16px);
+        border-color: var(--border);
+      }
+    }
     .hamburger { display: none !important; }
     .mobile-menu { display: none !important; }
 
@@ -310,7 +328,7 @@
     .hero-eyebrow {
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 14px;
+      font-size: 16px;
       letter-spacing: 0.4em;
       text-transform: uppercase;
       color: var(--gold);
@@ -336,12 +354,11 @@
     }
     .hero-tagline em {
       color: var(--gold);
-      font-style: normal;
     }
 
     .hero-sub {
       font-size: 1.25rem;
-      color: var(--muted);
+      color: var(--white);
       letter-spacing: 0.05em;
       margin-bottom: 52px;
       animation: fadeUp 1s ease 0.45s both;
@@ -369,7 +386,7 @@
       animation: fadeUp 1s ease 0.9s both;
     }
     .scroll-cue span {
-      font-size: 10px;
+      font-size: 16px;
       letter-spacing: 0.32em;
       text-transform: uppercase;
       color: var(--muted);
@@ -516,7 +533,7 @@
       justify-content: center;
       height: 15%;
       font-family: 'Caveat', cursive, var(--font-body);
-      font-size: 0.85rem;
+      font-size: 0.975rem;
       color: #3a3530;
       letter-spacing: 0.05em;
       padding: 4px 6px 0;
@@ -532,7 +549,7 @@
       transform: translateX(-50%);
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 10px;
+      font-size: 16px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--gold);
@@ -617,7 +634,7 @@
       display: flex;
       align-items: center;
       gap: 7px;
-      font-size: 0.82rem;
+      font-size: 0.95rem;
       color: var(--gold);
       letter-spacing: 0.04em;
     }
@@ -669,7 +686,7 @@
     }
     .review-stars { color: #fbbc04; font-size: 1rem; letter-spacing: 1px; }
     .review-text {
-      font-size: 0.93rem;
+      font-size: 1.055rem;
       color: rgba(245,240,232,0.75);
       line-height: 1.68;
       font-style: italic;
@@ -677,7 +694,7 @@
     .review-author {
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 11px;
+      font-size: 15px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--gold);
@@ -809,7 +826,7 @@
       display: block;
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 10px;
+      font-size: 16px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--gold);
@@ -824,7 +841,7 @@
     }
     .sort-card-label {
       display: block;
-      font-size: 10px;
+      font-size: 16px;
       letter-spacing: 0.32em;
       text-transform: uppercase;
       color: var(--gold);
@@ -1013,7 +1030,7 @@
     .photowall-brand {
       margin-top: 48px;
       font-family: var(--font-display);
-      font-size: 11px;
+      font-size: 15px;
       letter-spacing: 0.35em;
       text-transform: uppercase;
       color: rgba(201,160,66,0.3);
@@ -1073,7 +1090,7 @@
     }
     .gallery-counter {
       font-family: var(--font-display);
-      font-size: 11px;
+      font-size: 15px;
       letter-spacing: 0.15em;
       color: var(--muted);
     }
@@ -1121,13 +1138,13 @@
     .gallery-ph-label {
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 10px;
+      font-size: 16px;
       letter-spacing: 0.28em;
       text-transform: uppercase;
       color: var(--muted);
     }
     .gallery-ph-path {
-      font-size: 0.78rem;
+      font-size: 0.9rem;
       color: rgba(122,117,109,0.4);
       font-style: italic;
     }
@@ -1174,6 +1191,63 @@
     .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
     .gallery-thumb-ph { font-size: 1.2rem; opacity: 0.12; }
 
+    /* ─── MARKEN BANNER ─────────────────────────────────────── */
+    .brands-section {
+      padding: 40px 0;
+      background: var(--surface);
+      overflow: hidden;
+    }
+    .brands-label {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .brands-track-wrap {
+      position: relative;
+      overflow: hidden;
+    }
+    .brands-track-wrap::before,
+    .brands-track-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 120px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .brands-track-wrap::before {
+      left: 0;
+      background: linear-gradient(to right, var(--surface) 0%, transparent 100%);
+    }
+    .brands-track-wrap::after {
+      right: 0;
+      background: linear-gradient(to left, var(--surface) 0%, transparent 100%);
+    }
+    .brands-track {
+      display: flex;
+      align-items: center;
+      gap: 64px;
+      width: max-content;
+      padding: 8px 0;
+      cursor: grab;
+      user-select: none;
+    }
+    .brands-track.dragging { cursor: grabbing; }
+
+    .brand-logo {
+      height: 44px;
+      width: auto;
+      object-fit: contain;
+      flex-shrink: 0;
+      /* Alle Logos weiß auf dunklem Hintergrund */
+      filter: brightness(0) invert(1);
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+    .brand-logo:hover { opacity: 1; }
+    /* Logos die bereits weiß auf schwarz sind → schwarzen Hintergrund entfernen */
+    .brand-logo.blend { mix-blend-mode: screen; filter: none; opacity: 0.8; }
+    .brand-logo.blend:hover { opacity: 1; }
+
     /* ─── STANDORTE ─────────────────────────────────────────── */
     #standorte { padding: var(--pad-section) 0; }
     .stores-grid {
@@ -1194,7 +1268,7 @@
     }
     .store-info { padding: 32px; }
     .store-city {
-      font-size: 10px;
+      font-size: 16px;
       letter-spacing: 0.32em;
       text-transform: uppercase;
       color: var(--gold);
@@ -1213,14 +1287,14 @@
       display: flex;
       gap: 12px;
       margin-bottom: 10px;
-      font-size: 0.98rem;
+      font-size: 1.105rem;
       color: rgba(245,240,232,0.72);
       line-height: 1.6;
     }
     .store-icon { color: var(--gold); flex-shrink: 0; }
     .store-note {
       margin-top: 20px;
-      font-size: 0.88rem;
+      font-size: 1rem;
       color: var(--muted);
       font-style: italic;
     }
@@ -1250,7 +1324,7 @@
     }
     .kontakt-note-icon { font-size: 1.6rem; flex-shrink: 0; }
     .kontakt-note p {
-      font-size: 0.92rem !important;
+      font-size: 1.05rem !important;
       color: var(--black) !important;
       margin-bottom: 0 !important;
       line-height: 1.65 !important;
@@ -1268,7 +1342,7 @@
       display: block;
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 13px;
+      font-size: 15px;
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--gold);
@@ -1354,16 +1428,19 @@
     .footer-brand {}
     .footer-logo { width: 140px; margin-bottom: 10px; display: block; }
     .footer-tagline {
+      font-family: var(--font-display);
+      font-weight: 700;
       font-style: italic;
-      font-size: 0.88rem;
-      color: var(--muted);
-      letter-spacing: 0.08em;
+      font-size: 15px;
+      color: var(--gold);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
     }
 
     .footer-col-title {
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 11px;
+      font-size: 15px;
       letter-spacing: 0.25em;
       text-transform: uppercase;
       color: var(--gold);
@@ -1376,12 +1453,14 @@
       gap: 5px;
     }
     .footer-col a {
-      font-size: 0.88rem;
-      color: var(--muted);
-      transition: color 0.2s;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      opacity: 0.75;
+      transition: color 0.2s, opacity 0.2s;
       letter-spacing: 0.02em;
     }
-    .footer-col a:hover { color: var(--gold); }
+    .footer-col a:hover { color: var(--gold); opacity: 1; }
 
     .footer-bottom {
       border-top: 1px solid var(--border);
@@ -1392,7 +1471,7 @@
       flex-wrap: wrap;
       gap: 10px;
     }
-    .footer-copy { font-size: 0.75rem; color: rgba(122,117,109,0.5); }
+    .footer-copy { font-size: 0.875rem; color: var(--white); opacity: 0.65; }
     .footer-legal {
       display: flex;
       gap: 24px;
@@ -1401,13 +1480,14 @@
     .footer-legal a {
       font-family: var(--font-display);
       font-weight: 700;
-      font-size: 10px;
+      font-size: 16px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--muted);
-      transition: color 0.2s;
+      color: var(--white);
+      opacity: 0.65;
+      transition: color 0.2s, opacity 0.2s;
     }
-    .footer-legal a:hover { color: var(--gold); }
+    .footer-legal a:hover { color: var(--gold); opacity: 1; }
 
     @media (max-width: 760px) {
       .footer-grid   { grid-template-columns: 1fr 1fr; }
@@ -1478,7 +1558,7 @@
 
       <!-- Navigation Mobile (immer sichtbar als Menüband) -->
       <ul class="nav-mobile" aria-label="Mobile Navigation">
-        <li><a href="#gentlemens-time">Gentlemen's<br>Time</a></li>
+        <li><a href="#gentlemens-time">Gentlemen's Time</a></li>
         <li><a href="#sortiment">Sortiment</a></li>
         <li><a href="#standorte">Standorte</a></li>
         <li><a href="#kontakt">Kontakt</a></li>
@@ -1957,10 +2037,39 @@
     </div>
   </section>
 
+  <!-- ═══════════════════ MARKEN BANNER ══════════════════════ -->
+  <div class="brands-section">
+    <div class="container">
+      <div class="brands-label">
+        <span class="section-label" style="margin-bottom: 0;">Unsere Marken</span>
+      </div>
+    </div>
+    <div class="brands-track-wrap">
+      <div class="brands-track" id="brands-track">
+
+        <!-- Originale (7 Logos) -->
+        <img src="lindbergh.jpg"                                                         alt="Lindbergh"   class="brand-logo">
+        <img src="digel.jpg"   alt="Digel"       class="brand-logo">
+        <img src="strellson.jpg"                                               alt="Strellson"   class="brand-logo blend">
+        <img src="olymp.jpg"                                          alt="OLYMP"       class="brand-logo">
+        <img src="stetson.png"             alt="Stetson"     class="brand-logo">
+        <img src="matinique.png"                                                   alt="Matinique"   class="brand-logo blend">
+        <img src="lindenmann.png"           alt="Lindenmann"  class="brand-logo blend">
+
+        <!-- Duplikat für nahtloses Loopen -->
+        <img src="lindbergh.jpg"                                                         alt="Lindbergh"   class="brand-logo">
+        <img src="digel.jpg"   alt="Digel"       class="brand-logo">
+        <img src="strellson.jpg"                                               alt="Strellson"   class="brand-logo blend">
+        <img src="olymp.jpg"                                          alt="OLYMP"       class="brand-logo">
+        <img src="stetson.png"             alt="Stetson"     class="brand-logo">
+        <img src="matinique.png"                                                   alt="Matinique"   class="brand-logo blend">
+        <img src="lindenmann.png"           alt="Lindenmann"  class="brand-logo blend">
+
+      </div>
+    </div>
+  </div>
+
   <div class="divider container" aria-hidden="true"><span>✦</span></div>
-
-
-  <!-- ═══════════════════ STANDORTE ══════════════════════════ -->
   <section id="standorte" aria-labelledby="store-heading">
     <div class="container">
 
@@ -2295,7 +2404,7 @@
     // ── Navbar: Logo oben, Reiter beim Scrollen ────────
     const navbar     = document.getElementById('navbar');
     const navAnchors = document.querySelectorAll('.nav-links a, .nav-mobile a');
-    const AT_TOP     = 60;
+    const AT_TOP     = 20;
 
     function updateNavbar() {
       navbar.classList.toggle('is-scrolled', window.scrollY > AT_TOP);
@@ -2398,7 +2507,59 @@
     updateStagger();
     window.addEventListener('scroll', updateStagger, { passive: true });
 
-    // ── Reviews: Auto-Scroll + Drag/Swipe ────────────
+    // ── Marken Banner: Auto-Scroll + Drag/Swipe ──────
+    (function() {
+      const track = document.getElementById('brands-track');
+      const wrap  = track?.closest('.brands-track-wrap');
+      if (!track || !wrap) return;
+
+      const SPEED = 0.5;
+      let x = 0, halfWidth = 0, isDragging = false;
+      let dragStartX = 0, dragStartTX = 0, paused = false;
+
+      function init() {
+        halfWidth = track.scrollWidth / 2;
+        requestAnimationFrame(loop);
+      }
+      function loop() {
+        if (!isDragging && !paused) {
+          x -= SPEED;
+          if (Math.abs(x) >= halfWidth) x += halfWidth;
+          track.style.transform = `translateX(${x}px)`;
+        }
+        requestAnimationFrame(loop);
+      }
+      function normalize() {
+        if (x > 0)                   x -= halfWidth;
+        if (Math.abs(x) > halfWidth) x += halfWidth;
+      }
+      wrap.addEventListener('mousedown', e => {
+        isDragging = true; dragStartX = e.clientX; dragStartTX = x;
+        track.classList.add('dragging'); e.preventDefault();
+      });
+      document.addEventListener('mousemove', e => {
+        if (!isDragging) return;
+        x = dragStartTX + (e.clientX - dragStartX);
+        normalize(); track.style.transform = `translateX(${x}px)`;
+      });
+      document.addEventListener('mouseup', () => {
+        if (!isDragging) return;
+        isDragging = false; track.classList.remove('dragging');
+      });
+      wrap.addEventListener('touchstart', e => {
+        isDragging = true; dragStartX = e.touches[0].clientX; dragStartTX = x;
+      }, { passive: true });
+      document.addEventListener('touchmove', e => {
+        if (!isDragging) return;
+        x = dragStartTX + (e.touches[0].clientX - dragStartX);
+        normalize(); track.style.transform = `translateX(${x}px)`;
+      }, { passive: true });
+      document.addEventListener('touchend', () => { isDragging = false; });
+      wrap.addEventListener('mouseenter', () => { paused = true;  });
+      wrap.addEventListener('mouseleave', () => { paused = false; });
+      if (document.readyState === 'complete') { init(); }
+      else { window.addEventListener('load', init); }
+    })();
     (function() {
       const track = document.querySelector('.reviews-track');
       const wrap  = document.querySelector('.reviews-track-wrap');
